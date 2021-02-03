@@ -4,8 +4,7 @@ PALMS is a control software able to integrate Petri net modelling tools (through
 
 ## SETUP MODE
 
-In the Setup mode, PALMS manages its connections, and receive the IPs of the arduinos connected. Another feature of this mode is pnml convertion and the generation of a setup
-json file with pnml and PNRD/iPNRD relationship. PNRD/iPNRD initial marking and Arduino programming is assisted manually through PALMS this module results.
+In the Setup mode, PALMS manages its FTP connections, and receive the IPs of the arduinos connected. Another feature of this mode is pnml convertion and the generation of a 'setup.palms' file as intermediary of PNML and PNRD/iPNRD relationship. Arduino's standard files are stored in startupArduinoFiles directory. Attention: There are two distincts Arduino's files in startupArduinoFiles directory, one for tag initial marking (pnrd_iniTag.ino) and another for reader setup (pnrd_reader), and both must be installed by Arduino IDE manually in advance. PALMS create automaticaly '.pnrd' files with PNRD data structure and this file allows PALMS update PNRD information in "real-time". Future version of PALMS will use MQTT protocol.
 
 ## RUNTIME MODE
 In the Runtume mode PALMS transfer the Petri Net information to the connected arduinos via FTP, and receive the data generated from the readers with next state calculus files containing tag id, reader id, new marking vector, transitioning id, exception infor and timestamp. Based on these informations, marking vector is updated as well as a runtime history json. If an exception is identified, PALMS shows it in its visual interface. Pnml is updated in order to visualize the whole process through any Petri net modelling tool which is able to read this format. PALMS follows pnml format. PALMS does not deal with exception treatment.
