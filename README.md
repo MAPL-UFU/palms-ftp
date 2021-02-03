@@ -42,6 +42,17 @@ deal with exception treatment.
     python main.py
     ```
 
+## COMPILING EXECUTABLE ON WINDOWS
+
+1. Install Pyinstaller
+    ```python
+    pip install pyinstaller
+    ```
+2. Execute script
+    ```python
+    pyinstaller --onefile -w main.py
+    ```
+
 # License information
 PALMS is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software. But you always need to state that MAPL-UFU is the original author of this software.
 
