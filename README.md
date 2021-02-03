@@ -1,6 +1,6 @@
 # ![PALMS LOGO](ico.ico) PALMS
 
-PALMS is a control software able to integrate Petri net modelling tools (through the use of pnml exported file) with PNRD/iPNRD. In this version of PALMS, it can be connected to as many Arduinos as available in different IPs in a local net. Each Arduino Uno is able to be integrated with up to three PN532 RFID readers. As internal structure, PALMS has two modes, it means, Setup and Runtime.
+PALMS is a control software able to integrate Petri net modelling tools (through the use of pnml exported file) with PNRD/iPNRD. In this version of PALMS, it can be connected to as many Arduinos as available in different IPs in a local net. Each Arduino Uno is able to be integrated with up to three PN532 RFID readers; each Ardunino Mega can connect up to three PN532 RFID readers. As internal structure, PALMS has two modes, it means, Setup and Runtime.
 
 ## SETUP MODE
 
