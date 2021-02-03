@@ -24,6 +24,7 @@ In the Runtume mode PALMS transfer the Petri Net information to the connected ar
     ```
 
 ## COMPILING EXECUTABLE ON WINDOWS
+Although the method above is preferable and also applicable for windows OS, a second way to run the software is building the executable .exe:
 
 1. Install Pyinstaller
     ```python
@@ -33,6 +34,7 @@ In the Runtume mode PALMS transfer the Petri Net information to the connected ar
     ```python
     pyinstaller --onefile -w main.py
     ```
+The execuble built is found in the dist directory.
 
 # License information
 PALMS is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software. But you always need to state that MAPL-UFU is the original author of this software.
