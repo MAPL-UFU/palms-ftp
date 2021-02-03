@@ -1,0 +1,24 @@
+{
+    "pnmlFile": "/home/gabrielbs/Documents/python-virtual-environments/palms-qttest2/Multiple_Paths.pnml",
+    "qtdReaders": 2,
+    "readerListConfig": [
+        {
+            "IP": "192.168.100.9",
+            "qtdAntenna": 3,
+            "readerName": "ard1"
+        },
+        {
+            "IP": "192.168.100.10",
+            "qtdAntenna": 2,
+            "readerName": "ard2"
+        }
+    ],
+    "transitionNames": [
+        "transition 0",
+        "transition 1",
+        "transition 2",
+        "transition 3",
+        "transition 4"
+    ],
+    "type": "PNRD"
+}
