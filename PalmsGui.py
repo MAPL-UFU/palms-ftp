@@ -1,7 +1,7 @@
 '''
-Created on Jan , 2020
-@author: Roger H. Carrijo
-git: roger1618
+Created on Jan , 2021
+@author: Gabriel de Brito Silva
+git: GabrielBS-eng 
 '''
 import os
 import datetime
@@ -108,7 +108,7 @@ class PalmsGui():
         str_array_matrix = ','.join(map(str, self.array_matrix))
         str_starting_token_vector= ','.join(map(str, self.starting_token_vector))
         if self.palms_type=='PNRD':
-            palms_init_template = FileCreator('palmsSetup',self.pnrd.file,'pnrd_initTag','txt')
+            palms_init_template = FileCreator('palmsSetup',self.pnrd.file,'pnrd_initTag','pnrd')
             #palms_init_template = FileCreator('palmsSetup',self.pnrd.file,'pnrd_initTag','ino')
             palms_init_template.set_text(
                 pnrd_init_template(
@@ -124,7 +124,8 @@ class PalmsGui():
                 if e["readerName"]=='':
                     e["readerName"] = 'palms'
 
-                readers_file = FileCreator('palmsSetup',self.pnrd.file,f'pnrd_reader{reader_count}_{e["readerName"]}','txt')
+                readers_file = FileCreator(f'palmsSetup/{e["IP"]}',self.pnrd.file,'PNRDINFO','pnrd')
+#                readers_file = FileCreator('palmsSetup',self.pnrd.file,f'pnrd_reader{reader_count}_{e["readerName"]}','pnrd')
                 #readers_file = FileCreator('palmsSetup',self.pnrd.file,f'pnrd_reader{reader_count}_{e["readerName"]}','ino')
                 if e["qtdAntenna"]==1:
                     readers_file.set_text(
@@ -160,7 +161,7 @@ class PalmsGui():
                 else:
                     fire_vector_init.append(0)
 
-            palms_init_template = FileCreator('palmsSetup',self.pnrd.file,'ipnrd_initTag','txt')
+            palms_init_template = FileCreator('palmsSetup',self.pnrd.file,'ipnrd_initTag','pnrd')
             #palms_init_template = FileCreator('palmsSetup',self.pnrd.file,'ipnrd_initTag','ino')
             palms_init_template.set_text(
                 ipnrd_init_template(
@@ -173,7 +174,8 @@ class PalmsGui():
                 if e["readerName"]=='':
                     e["readerName"] = 'palms'
 
-                readers_file = FileCreator('palmsSetup',self.pnrd.file,f'ipnrd_reader_{e["readerName"]}','txt')
+                readers_file = FileCreator(f'palmsSetup/{e["IP"]}',self.pnrd.file,f'iPNRDINFO','pnrd')
+#                readers_file = FileCreator('palmsSetup',self.pnrd.file,f'ipnrd_reader_{e["readerName"]}','pnrd')
                 #readers_file = FileCreator('palmsSetup',self.pnrd.file,f'ipnrd_reader_{e["readerName"]}','ino')
                 readers_file.set_text(
                     ipnrd_arduino_uno_template(
@@ -458,8 +460,8 @@ class PalmsGui():
                 with FTP(host=i["IP"], user='myname', passwd='123') as ftp:
                     #print(ftp.getwelcome()) 
                     self.ui.runtimeTerminal_label.setText(ftp.getwelcome())
-#                    with open(, 'rb') as arduinoSetup:
-#                        ftp.storlines('STOR ', arduinoSetup)
+                    with open(f'palmsSetup/{e["IP"]}/PNRDINFO.pnrd', 'rb') as arduinoSetup:
+                        ftp.storlines(f'STOR palmsSetup/{e["IP"]}/PNRDINFO.pnrd', arduinoSetup)
 
                     ftp.close()
             except:
@@ -548,7 +550,6 @@ class PalmsGui():
             self.ui.info_label.setStyleSheet('QLabel#info_label {color: red}')
 
 #            self.ui.info_label.setText("Close Your Serial Connection before Stop") 
-            self.ui.info_label.setText("Close Your Connection before Stop") 
 
 #            self.ui.confirmSerialConection_pushButton.setEnabled(False)
             self.ui.transferPNRDSetup_pushButton.setEnabled(False)
