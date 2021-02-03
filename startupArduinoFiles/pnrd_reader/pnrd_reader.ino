@@ -137,7 +137,7 @@
 //##############################################################################
 
 //################################## FILES SYSTEM ##############################           
-            myFile = FAT_FS.open("pnrdInfo.txt");
+            myFile = FAT_FS.open("pnrdInfo.pnrd");
             int fileLineIndex = 0;
             
             if(myFile)
@@ -198,7 +198,7 @@
             }
             else
             {
-                Serial.println("Error opening pnrdInfo.txt");
+                Serial.println("Error opening pnrdInfo.pnrd");
             }
             
             n_places = lines;
