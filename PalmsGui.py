@@ -64,7 +64,7 @@ class PalmsGui():
 #        self.ui.confirmSerialConection_pushButton.clicked.connect(self.verify_palms_loader)
         self.ui.transferPNRDSetup_pushButton.clicked.connect(self.connect_FTP_IP) ##########################################
         
-        self.ui.getRuntimeInfo_pushButton.clicked.connect(self.stop_connection)   
+        self.ui.getRuntimeInfo_pushButton.clicked.connect(self.updateRuntimeInfo)   
 
 #        self.ui.addSerial_pushButton.clicked.connect(self.append_reader)  
         self.ui.addIP_pushButton.clicked.connect(self.append_reader)
@@ -458,15 +458,20 @@ class PalmsGui():
 
             try:
                 with FTP(host=i["IP"], user='myname', passwd='123') as ftp:
-                    #print(ftp.getwelcome()) 
-                    self.ui.runtimeTerminal_label.setText(ftp.getwelcome())
-                    with open(f'palmsSetup/{e["IP"]}/PNRDINFO.pnrd', 'rb') as arduinoSetup:
-                        ftp.storlines(f'STOR palmsSetup/{e["IP"]}/PNRDINFO.pnrd', arduinoSetup)
+                    print(ftp.getwelcome()) 
+                    #self.ui.runtimeTerminal_label.setText(ftp.getwelcome())
+                    #with open('PNRDINFO.pnrd', 'rb') as text_file:
+                    with open(f'palmsSetup/{i["IP"]}/PNRDINFO.pnrd', 'rb') as text_file:
+                        ftp.storlines('STOR PNRDINFO.pnrd', text_file)
+                        #ftp.storlines(f'STOR palmsSetup/{i["IP"]}/PNRDINFO.pnrd', text_file)
 
+                    self.ui.runtimeTerminal_label.setStyleSheet('QLabel#runtimeTerminal_label {color: green}')
+                    self.ui.runtimeTerminal_label.setText('PNRD info sent to Arduinos Successfully.')
                     ftp.close()
             except:
                 self.ui.runtimeTerminal_label.setStyleSheet('QLabel#runtimeTerminal_label {color: red}')
-                self.ui.runtimeTerminal_label.setText(f'Error conecting to {i["IP"]}')
+               # self.ui.runtimeTerminal_label.setText('tagId: DF Transition: t3 Marking: (01-11-110)   EXCEPTION')
+               # print('tagId: DF Transition: t0 Marking: (0101000)   Ok')
                 print("Error conecting to "+i["IP"])
 
     def set_msg_status(self, msg_status, msg):
@@ -537,21 +542,53 @@ class PalmsGui():
         self.pnrd_setup_is_ok = True
         
 
-    def stop_connection(self):
-        try:
-            self.msg_thread.stop()
-            self.ui.info_label.setText("Connection Closed")
+    def updateRuntimeInfo(self):
+        self.FTP_IPs = list()
+        for i in self.reader_list:
+            ip_connection = i["IP"]
+            print(i["IP"])
+            self.FTP_IPs.append(ip_connection)
 
-#            self.ui.confirmSerialConection_pushButton.setEnabled(True)
-            self.ui.transferPRNDSetup_pushButton.setEnabled(True)
+            try:
+                with FTP(host=i["IP"], user='myname', passwd='123') as ftp:
+                    print(ftp.getwelcome())
+                    #self.ui.runtimeTerminal_label.setText(ftp.getwelcome())
+                    #with open('PNRDINFO.pnrd', 'rb') as text_file:
+                    with open(f'palmsSetup/{i["IP"]}/PNRDINFOhey.pnrd', 'w') as local_file:
+                        #response = ftp.retrlines(f'RETR palmsSetup/{i["IP"]}/PNRDINFOhey.pnrd', local_file.write)
+                        res = ftp.retrlines('RETR PNRDINFO.pnrd', local_file.write)
 
-            self.ui.getRuntimeInfo_pushButton.setEnabled(False)
-        except:
-            self.ui.info_label.setStyleSheet('QLabel#info_label {color: red}')
+                        if res.startswith('226'):
+                            print('Transfer complete')
+                            self.ui.runtimeTerminal_label.setStyleSheet('QLabel#runtimeTerminal_label {color: green}')
+                            self.ui.runtimeTerminal_label.setText('Transfer complete')
+ 
+                        else:
+                            print('Error transferring. Local file may be incomplete or corrupt.')
+                            self.ui.runtimeTerminal_label.setStyleSheet('QLabel#runtimeTerminal_label {color: red}')
+                            self.ui.runtimeTerminal_label.setText('Error transferring. Local file may be incomplete or corrupt.')
 
-#            self.ui.info_label.setText("Close Your Serial Connection before Stop") 
+                    ftp.close()
+            except:
+                self.ui.runtimeTerminal_label.setStyleSheet('QLabel#runtimeTerminal_label {color: red}')
+               # self.ui.runtimeTerminal_label.setText('tagId: DF Transition: t3 Marking: (01-11-110)   EXCEPTION')
+               # print('tagId: DF Transition: t0 Marking: (0101000)   Ok')
+                print("Error conecting to "+i["IP"])
 
-#            self.ui.confirmSerialConection_pushButton.setEnabled(False)
-            self.ui.transferPNRDSetup_pushButton.setEnabled(False)
-
-            self.ui.getRuntimeInfo_pushButton.setEnabled(False)
+#       try:
+#            self.msg_thread.stop()
+#            self.ui.info_label.setText("Connection Closed")
+#
+##            self.ui.confirmSerialConection_pushButton.setEnabled(True)
+#            self.ui.transferPRNDSetup_pushButton.setEnabled(True)
+#
+#            self.ui.getRuntimeInfo_pushButton.setEnabled(False)
+#        except:
+#            self.ui.info_label.setStyleSheet('QLabel#info_label {color: red}')
+#
+##            self.ui.info_label.setText("Close Your Serial Connection before Stop") 
+#
+##            self.ui.confirmSerialConection_pushButton.setEnabled(False)
+#            self.ui.transferPNRDSetup_pushButton.setEnabled(False)
+#
+#            self.ui.getRuntimeInfo_pushButton.setEnabled(False)
