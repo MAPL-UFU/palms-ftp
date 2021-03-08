@@ -1,14 +1,14 @@
 {
-    "pnmlFile": "/home/gabrielbs/Documents/python-virtual-environments/palms-qttest2/Multiple_Paths.pnml",
+    "pnmlFile": "/home/gabrielbs/Documents/python-virtual-environments/palms-ftp/Multiple_Paths.pnml",
     "qtdReaders": 2,
     "readerListConfig": [
         {
-            "IP": "192.168.100.9",
+            "IP": "10.0.211.239",
             "qtdAntenna": 3,
             "readerName": "ard1"
         },
         {
-            "IP": "192.168.100.10",
+            "IP": "10.0.211.240",
             "qtdAntenna": 2,
             "readerName": "ard2"
         }
