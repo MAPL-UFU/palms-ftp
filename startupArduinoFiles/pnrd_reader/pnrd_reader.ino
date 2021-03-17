@@ -19,6 +19,8 @@
 
         FtpServer ftpSrv;
 
+	//DO NOT FORGET TO CHANGE THE MAC ADDRESS FOR EVERY ARDUINO UPLOADED
+	//THIS IS THE ONLY THING THAT NEEDS TO BE SET
         byte mac[] = { 0x00, 0xaa, 0xbb, 0xcc, 0xde, 0xef };
 
         IPAddress serverIp( 0, 0, 0, 0 );
@@ -40,10 +42,8 @@
 
         uint16_t * tokenVector;             
 
- //       uint8_t n_places = 7; //#########################      
-        uint8_t n_places; //#########################      
- //       uint8_t n_transitions = 8; //#######################              
-        uint8_t n_transitions; //#######################              
+        uint8_t n_places;      
+        uint8_t n_transitions;              
 
         bool tagReadyToContinue = false;                
         String stringToken;             
@@ -146,10 +146,7 @@
                 // Reading the whole file
                 while(myFile.available())
                 {
-//                    Serial.println("WHYYY");
                     String list = myFile.readStringUntil('\n');
-//                    Serial.println("dont know");
-//            Serial.println(list);
 
                     char buff[list.length()];
                     int buffInt[list.length()];
@@ -377,7 +374,6 @@
                             }                 
                         }             
                     }
-                    //Serial.flush();
                     timestamp = millis();
                     Serial.print("       ");
                     Serial.println(timestamp);

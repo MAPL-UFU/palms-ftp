@@ -20,6 +20,8 @@
 
         FtpServer ftpSrv;
 
+	//DO NOT FORGET TO CHANGE THE MAC ADDRESS FOR EVERY ARDUINO UPLOADED
+	//THIS IS THE ONLY THING THAT NEEDS TO BE SET
         byte mac[] = { 0x00, 0xaa, 0xbb, 0xcc, 0xde, 0xef };
 
         IPAddress serverIp( 0, 0, 0, 0 );
@@ -35,16 +37,12 @@
         uint16_t mStartingTokenVector[10];
 //##############################################################################
 
-//        int8_t mIncidenceMatrix[] = {-1,0,0,0,1,-1,0,0,1,-1,0,0,0,0,0,0,0,1,-1,0,0,0,0,0,0,0,0,0,0,1,-1,0,0,0,0,0,0,0,1,-1,0,0,1,-1,-1,0,0,1,0,0,0,1,0,0,0,0};              
-//        uint16_t mStartingTokenVector[] = {1,0,0,0,0,0,0};    
-                                                                        
         int incomingByte = 0;                                           
                                                                         
         PN532_HSU pn532hsu(Serial1);
         NfcAdapter nfc = NfcAdapter(pn532hsu);
                                                                         
         Pn532NfcReader* reader = new Pn532NfcReader(&nfc);              
-        Pnrd pnrd = Pnrd(reader,7,8, false, false, false);            
                                                                         
         unsigned long timestamp;
 
@@ -120,10 +118,7 @@
                     // Reading the whole file
                     while(myFile.available())
                     {
-//                        Serial.println("WHYYY");
                         String list = myFile.readStringUntil('\n');
-//                        Serial.println("dont know");
-//                Serial.println(list);
 
                         char buff[list.length()];
                         int buffInt[list.length()];
@@ -176,7 +171,8 @@
                 }
                 
 //##############################################################################
- 
+        	Pnrd pnrd = Pnrd(reader,lines,columns, false, false, false);            
+
                 reader->initialize();                                           
                                                                         
                 // pnrd.setGoalToken(tokenDesejado);                            
